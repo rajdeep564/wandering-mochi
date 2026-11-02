@@ -1,16 +1,18 @@
+(() => {
 // Wandering Mochi: https://github.com/rajdeep564/wandering-mochi (MIT License)
 // Movement and sprites adapted from oneko.js (https://github.com/adryd325/oneko.js),
 // MIT License, Copyright (c) 2022 adryd.
-(() => {
-  const script = document.currentScript;
-  if (!script || window.__wanderingMochi) return;
-  window.__wanderingMochi = true;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+const SPRITE_URL = "data:image/gif;base64,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";
+const HOME_URL = "https://rajdeep564.github.io/wandering-mochi/";
 
-  const BASE_URL = new URL(".", script.src).href;
-  const PET_NAME = script.dataset.name || "Mochi";
-  const OWNER_NAME = script.dataset.owner || "";
-  const PHOTO_SELECTOR = script.dataset.photo || "";
+function adoptMochi({ name = "Mochi", owner = "", photo = "", home = HOME_URL } = {}) {
+  if (typeof window === "undefined" || window.__wanderingMochi) return () => {};
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return () => {};
+  window.__wanderingMochi = true;
+
+  const PET_NAME = name;
+  const OWNER_NAME = owner;
+  const PHOTO_SELECTOR = photo;
   const STORAGE_KEY = "mochi-pet";
   const MODE_STORAGE_KEY = "mochi-mode";
 
@@ -23,9 +25,32 @@
   const THOUGHT_INTERVAL_MS = 40000;
   const PLAY_TIMEOUT_MS = 12000;
   const PLAY_THROWS = 4;
+  const EAT_MS = 2200;
+  const MOUTH_OFFSET = 3;
+  const BALL_SIZE = 18;
+  const BALL_RADIUS = BALL_SIZE / 2;
+  const BALL_REACH = 22;
+  const BATS_PER_THROW = 2;
+  const BAT_MS = 550;
+  const NOTICE_MS = 350;
+  const GRAVITY = 1500;
+  const BOUNCE = 0.62;
+  const BOUNCE_GRIP = 0.86;
+  const MIN_BOUNCE_SPEED = 70;
+  const ROLL_FRICTION = 2.6;
+  const AIR_DRAG = 0.15;
+  const WALL_BOUNCE = 0.6;
+  const THROW_LIFT = 430;
+  const THROW_SECONDS = 1.15;
+  const MAX_STEP_SECONDS = 0.033;
 
   const SPRITES = {
     idle: [[-3, -3]],
+    eating: [[-3, -2], [-3, -3]],
+    batN: [[0, 0], [0, -1]],
+    batE: [[-2, -2], [-2, -3]],
+    batS: [[-7, -1], [-6, -2]],
+    batW: [[-4, 0], [-4, -1]],
     alert: [[-7, -3]],
     scratchSelf: [[-5, 0], [-6, 0], [-7, 0]],
     tired: [[-3, -2]],
@@ -69,7 +94,7 @@
       content: ""; position: absolute; inset: 0; border: 2px solid var(--accent); border-radius: 50%;
       animation: ping 1.2s ease-out infinite;
     }
-    .sprite { width: 32px; height: 32px; image-rendering: pixelated; background-image: url(${BASE_URL}oneko.gif); }
+    .sprite { width: 32px; height: 32px; image-rendering: pixelated; background-image: url(${SPRITE_URL}); }
     .panel {
       position: fixed; left: 0; top: 0; z-index: 2147483001; display: flex; flex-direction: column;
       gap: 8px; width: max-content; max-width: 240px; pointer-events: none;
@@ -98,9 +123,22 @@
       font-size: 18px; box-shadow: 0 4px 14px rgb(0 0 0 / 0.14);
     }
     .layer { position: fixed; inset: 0; z-index: 2147483000; overflow: hidden; pointer-events: none; }
-    .item { position: absolute; left: 0; top: 0; font-size: 22px; line-height: 1; transition: transform 0.3s; }
+    .food { position: absolute; left: 0; top: 0; font-size: 13px; line-height: 1; animation: eat ${EAT_MS}ms steps(5, end) forwards; }
+    .ball-spot { position: absolute; left: 0; top: 0; width: ${BALL_SIZE}px; height: ${BALL_SIZE}px; }
+    .ball-shadow { position: absolute; left: 2px; right: 2px; bottom: -4px; height: 4px; border-radius: 50%; background: rgb(0 0 0 / 0.28); }
+    .ball-hop { position: absolute; inset: 0; transform-origin: 50% 100%; }
+    .ball-hop::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      background: radial-gradient(circle at 32% 26%, rgb(255 255 255 / 0.85), transparent 32%);
+      box-shadow: inset -2px -3px 4px rgb(0 0 0 / 0.25);
+    }
+    .ball-skin {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(#ff5a5f 0 60deg, #ffd23f 0 120deg, #fff 0 180deg, #2ec4b6 0 240deg, #4d7cfe 0 300deg, #ff9f1c 0);
+    }
     .heart { position: absolute; color: #ef4444; font-size: 15px; animation: float 1s ease-out forwards; }
     @keyframes float { to { transform: translateY(-48px) scale(1.2); opacity: 0; } }
+    @keyframes eat { to { transform: var(--food-at) scale(0.15); opacity: 0.4; } }
     @keyframes ping { to { transform: scale(1.7); opacity: 0; } }
   `;
 
@@ -125,7 +163,7 @@
             <button type="button" data-action="toggleSit" class="sit">🐾 Sit</button>
             <button type="button" data-action="hide">🙈 Hide</button>
           </div>
-          <a target="_blank" rel="noopener" class="diary-link">Where has she been?</a>
+          <a target="_blank" rel="noopener" class="adopt-link">Add me to your site</a>
         </div>
       </div>
       <button class="recall" type="button">🐈</button>
@@ -146,7 +184,7 @@
   recall.setAttribute("aria-label", `Bring ${PET_NAME} back`);
   recall.title = `Bring ${PET_NAME} back`;
   find(".pet-name").textContent = PET_NAME;
-  find(".diary-link").href = BASE_URL;
+  find(".adopt-link").href = `${home}#adopt`;
 
   function pick(lines) {
     return lines[Math.floor(Math.random() * lines.length)];
@@ -208,7 +246,15 @@
   let throwsLeft = 0;
   let playDeadline = 0;
   let speechTimer;
-  let item = null;
+  let introTimer;
+  let animationId = 0;
+  let food = null;
+  let ball = null;
+  let body = null;
+  let lastStepAt = 0;
+  let batsLeft = 0;
+  const listeners = new AbortController();
+  const { signal } = listeners;
 
   function clampX(value) {
     return Math.min(Math.max(32, value), window.innerWidth - 32);
@@ -258,19 +304,85 @@
     }
   }
 
-  function placeItem(emoji, itemX, itemY) {
-    if (!item) {
-      item = document.createElement("span");
-      item.className = "item";
-      layer.append(item);
-    }
-    item.textContent = emoji;
-    item.style.transform = `translate(${itemX - 12}px, ${itemY - 12}px)`;
+  function clearFood() {
+    food?.remove();
+    food = null;
   }
 
-  function clearItem() {
-    item?.remove();
-    item = null;
+  function serveFood() {
+    clearFood();
+    const place = `translate(${x - 9}px, ${y + MOUTH_OFFSET - 7}px)`;
+    food = document.createElement("span");
+    food.className = "food";
+    food.textContent = "🐟";
+    food.style.transform = place;
+    food.style.setProperty("--food-at", place);
+    layer.append(food);
+  }
+
+  function drawBall() {
+    const { x: ballX, y: ballY, z, spin, squash } = body;
+    const [shadow, hop] = ball.children;
+    ball.style.transform = `translate(${ballX - BALL_RADIUS}px, ${ballY - BALL_RADIUS}px)`;
+    hop.style.transform = `translateY(${-z}px) scale(${1 + squash}, ${1 - squash})`;
+    hop.firstElementChild.style.transform = `rotate(${spin}rad)`;
+    shadow.style.transform = `scale(${1 - Math.min(z / 140, 0.6)})`;
+    shadow.style.opacity = String(1 - Math.min(z / 200, 0.65));
+  }
+
+  function bounceOffWalls() {
+    const maxX = window.innerWidth - BALL_RADIUS;
+    const maxY = window.innerHeight - BALL_RADIUS;
+    if (body.x < BALL_RADIUS || body.x > maxX) {
+      body.x = Math.min(Math.max(BALL_RADIUS, body.x), maxX);
+      body.vx *= -WALL_BOUNCE;
+    }
+    if (body.y < BALL_RADIUS || body.y > maxY) {
+      body.y = Math.min(Math.max(BALL_RADIUS, body.y), maxY);
+      body.vy *= -WALL_BOUNCE;
+    }
+  }
+
+  // x and y are the ground, and z is the height above it.
+  function stepBall(seconds) {
+    body.vz -= GRAVITY * seconds;
+    body.z += body.vz * seconds;
+    if (body.z <= 0) {
+      body.z = 0;
+      if (body.vz < -MIN_BOUNCE_SPEED) {
+        body.squash = Math.min(0.32, -body.vz / 1400);
+        body.vz *= -BOUNCE;
+        body.vx *= BOUNCE_GRIP;
+        body.vy *= BOUNCE_GRIP;
+      } else {
+        body.vz = 0;
+      }
+    }
+    const drag = Math.exp(-(body.z === 0 ? ROLL_FRICTION : AIR_DRAG) * seconds);
+    body.vx *= drag;
+    body.vy *= drag;
+    body.x += body.vx * seconds;
+    body.y += body.vy * seconds;
+    bounceOffWalls();
+    const speed = Math.hypot(body.vx, body.vy);
+    body.spin += (Math.sign(body.vx) || 1) * (speed * seconds) / BALL_RADIUS;
+    body.squash *= Math.exp(-14 * seconds);
+  }
+
+  function showBall(ballX, ballY) {
+    if (!ball) {
+      ball = document.createElement("div");
+      ball.className = "ball-spot";
+      ball.innerHTML = `<div class="ball-shadow"></div><div class="ball-hop"><div class="ball-skin"></div></div>`;
+      layer.append(ball);
+    }
+    body = { x: ballX, y: ballY, z: 0, vx: 0, vy: 0, vz: 0, spin: 0, squash: 0 };
+    drawBall();
+  }
+
+  function clearBall() {
+    ball?.remove();
+    ball = null;
   }
 
   function setSprite(name, frame) {
@@ -306,29 +418,77 @@
   function endPlay() {
     throwsLeft = 0;
     goal = null;
-    clearItem();
+    clearBall();
   }
 
-  function throwBall(ballX, ballY) {
-    placeItem("🎾", ballX, ballY);
-    playDeadline = performance.now() + PLAY_TIMEOUT_MS;
-    goal = {
-      x: ballX,
-      y: ballY,
-      onArrive: (now) => {
-        throwsLeft -= 1;
-        playDeadline = now + PLAY_TIMEOUT_MS;
-        if (throwsLeft > 0) {
-          say("Got it! Throw again!");
-          return;
+  function finishThrow(now) {
+    throwsLeft -= 1;
+    playDeadline = now + PLAY_TIMEOUT_MS;
+    if (throwsLeft > 0) {
+      say("Got it! Throw again!");
+      return;
+    }
+    endPlay();
+    pose = { name: "scratchSelf", until: now + 1500 };
+    addLove(3);
+    spawnHearts(5);
+    say("That was so fun!");
+  }
+
+  // She stops at the ball's edge so she stays in front of it, not under it.
+  function aimAtBall() {
+    const distance = Math.hypot(x - body.x, y - body.y) || 1;
+    goal.x = clampX(body.x + ((x - body.x) / distance) * BALL_REACH);
+    goal.y = clampY(body.y + ((y - body.y) / distance) * BALL_REACH);
+  }
+
+  function chaseBall() {
+    goal = { x, y, track: aimAtBall, onArrive: batBall };
+    aimAtBall();
+  }
+
+  function hitBall() {
+    const angle = Math.atan2(body.y - y, body.x - x) + (Math.random() - 0.5);
+    const speed = 190 + Math.random() * 120;
+    body.vx = Math.cos(angle) * speed;
+    body.vy = Math.sin(angle) * speed;
+    body.vz = 170 + Math.random() * 110;
+  }
+
+  function batBall(now) {
+    const toBallX = body.x - x;
+    const toBallY = body.y - y;
+    const name = Math.abs(toBallX) > Math.abs(toBallY)
+      ? toBallX > 0 ? "batE" : "batW"
+      : toBallY > 0 ? "batS" : "batN";
+    playDeadline = now + PLAY_TIMEOUT_MS;
+    pose = {
+      name,
+      until: now + BAT_MS,
+      onEnd: () => {
+        const canReach = Math.hypot(body.x - x, body.y - y) < BALL_REACH * 2;
+        if (!canReach) {
+          chaseBall();
+        } else if (batsLeft > 0) {
+          batsLeft -= 1;
+          hitBall();
+          chaseBall();
+        } else {
+          finishThrow(performance.now());
         }
-        endPlay();
-        pose = { name: "scratchSelf", until: now + 1500 };
-        addLove(3);
-        spawnHearts(5);
-        say("That was so fun!");
       },
     };
+  }
+
+  function throwBall(nextX, nextY) {
+    body.vx = (nextX - body.x) / THROW_SECONDS;
+    body.vy = (nextY - body.y) / THROW_SECONDS;
+    body.vz = THROW_LIFT;
+    const now = performance.now();
+    playDeadline = now + PLAY_TIMEOUT_MS;
+    batsLeft = BATS_PER_THROW;
+    pose = { name: "alert", until: now + NOTICE_MS, onEnd: chaseBall };
+    goal = null;
   }
 
   function visitPhoto(now) {
@@ -360,17 +520,14 @@
     },
     feed() {
       closeMenu();
-      const side = x > window.innerWidth / 2 ? -1 : 1;
-      const fishX = clampX(x + side * 140);
-      const fishY = clampY(y);
-      placeItem("🐟", fishX, fishY);
-      say("Is that for me?!");
-      goal = {
-        x: fishX,
-        y: fishY,
-        onArrive: (now) => {
-          clearItem();
-          pose = { name: "scratchSelf", until: now + 1500 };
+      endPlay();
+      serveFood();
+      say("Nom nom nom...", EAT_MS);
+      pose = {
+        name: "eating",
+        until: performance.now() + EAT_MS,
+        onEnd: () => {
+          clearFood();
           addLove(2);
           spawnHearts(5);
           say(pick(FEED_LINES));
@@ -381,7 +538,7 @@
       closeMenu();
       throwsLeft = PLAY_THROWS;
       playDeadline = performance.now() + PLAY_TIMEOUT_MS;
-      placeItem("🎾", clampX(x + 56), clampY(y));
+      showBall(clampX(x + 56), clampY(y));
       say("Click anywhere to throw my ball!", 5000);
     },
     toggleSit() {
@@ -399,6 +556,7 @@
     hide() {
       closeMenu();
       endPlay();
+      clearFood();
       setInviting(false);
       pose = null;
       window.clearTimeout(speechTimer);
@@ -413,6 +571,7 @@
       return;
     }
     endPlay();
+    clearFood();
     pose = null;
     setInviting(false);
     isMenuOpen = true;
@@ -464,7 +623,9 @@
         setSprite(pose.name, step);
         return;
       }
+      const { onEnd } = pose;
       pose = null;
+      onEnd?.();
       if (isInviting) setInviting(false);
     }
 
@@ -484,6 +645,7 @@
 
     const pointerActive = now - lastPointerAt < POINTER_IDLE_MS;
     if (goal) {
+      goal.track?.();
       targetX = goal.x;
       targetY = goal.y;
     } else if (!pointerActive && !playing && idleAnimation === null && idleTime > WANDER_REST_FRAMES) {
@@ -531,12 +693,17 @@
   }
 
   function onAnimationFrame(now) {
+    if (ball) {
+      stepBall(Math.min((now - lastStepAt) / 1000, MAX_STEP_SECONDS));
+      drawBall();
+    }
+    lastStepAt = now;
     if (now - lastFrameAt > FRAME_MS) {
       lastFrameAt = now;
       frame(now);
       placePanel();
     }
-    window.requestAnimationFrame(onAnimationFrame);
+    animationId = window.requestAnimationFrame(onAnimationFrame);
   }
 
   function followPointer({ clientX, clientY }) {
@@ -559,15 +726,23 @@
     return event.composedPath().includes(host);
   }
 
-  document.addEventListener("pointermove", (event) => {
-    if (event.pointerType !== "touch") followPointer(event);
-  });
+  document.addEventListener(
+    "pointermove",
+    (event) => {
+      if (event.pointerType !== "touch") followPointer(event);
+    },
+    { signal },
+  );
 
   // A touch may be the start of a scroll, so wait for its click.
-  document.addEventListener("pointerdown", (event) => {
-    lastPointerType = event.pointerType;
-    if (event.pointerType !== "touch" && !isPet(event)) onPress(event);
-  });
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      lastPointerType = event.pointerType;
+      if (event.pointerType !== "touch" && !isPet(event)) onPress(event);
+    },
+    { signal },
+  );
 
   // A throw should not also follow a link under the pointer.
   document.addEventListener(
@@ -581,16 +756,24 @@
         event.stopPropagation();
       }
     },
-    true,
+    { capture: true, signal },
   );
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && isMenuOpen) closeMenu();
-  });
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Escape" && isMenuOpen) closeMenu();
+    },
+    { signal },
+  );
 
-  window.addEventListener("pagehide", () => {
-    writeStorage(MODE_STORAGE_KEY, JSON.stringify({ mode: currentMode, x, y }));
-  });
+  window.addEventListener(
+    "pagehide",
+    () => {
+      writeStorage(MODE_STORAGE_KEY, JSON.stringify({ mode: currentMode, x, y }));
+    },
+    { signal },
+  );
 
   button.addEventListener("click", toggleMenu);
   menu.addEventListener("click", (event) => {
@@ -616,7 +799,7 @@
 
   async function shareTravels() {
     try {
-      const response = await fetch(`${BASE_URL}diary.json`);
+      const response = await fetch(`${home}diary.json`);
       const { stops } = await response.json();
       const line = homecomingLine(stops);
       if (line && currentMode !== "hidden") say(line, 7000);
@@ -654,10 +837,28 @@
     showLove();
     setSprite("idle", 0);
     placePet();
-    window.setTimeout(introduce, 2500);
-    window.requestAnimationFrame(onAnimationFrame);
+    introTimer = window.setTimeout(introduce, 2500);
+    animationId = window.requestAnimationFrame(onAnimationFrame);
   }
 
   if (document.body) start();
-  else document.addEventListener("DOMContentLoaded", start);
+  else document.addEventListener("DOMContentLoaded", start, { signal });
+
+  return () => {
+    listeners.abort();
+    window.cancelAnimationFrame(animationId);
+    window.clearTimeout(introTimer);
+    window.clearTimeout(speechTimer);
+    host.remove();
+    window.__wanderingMochi = false;
+  };
+}
+
+const script = document.currentScript;
+adoptMochi({
+  name: script.dataset.name,
+  owner: script.dataset.owner,
+  photo: script.dataset.photo,
+  home: new URL(".", script.src).href,
+});
 })();

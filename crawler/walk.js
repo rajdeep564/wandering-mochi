@@ -19,7 +19,13 @@ async function fetchHome(host, net) {
   const page = await politeFetch(`https://${host}/`, net);
   const isHtml = page.contentType.toLowerCase().includes("html");
   if (page.status !== 200 || !isHtml) return { welcome: false, unreachable: page.status >= 500 };
-  return { welcome: isWelcome(page.text), page };
+  return { welcome: isWelcome(page.text) || (await hasInviteFile(host, net)), page };
+}
+
+// npm users bundle the cat, so her script is not visible in their HTML.
+async function hasInviteFile(host, net) {
+  const file = await politeFetch(`https://${host}/mochi.txt`, net);
+  return file.status === 200 && file.text.trim().toLowerCase() === "welcome";
 }
 
 // Unvisited homepages are checked once a month at most, and only hashes are saved,

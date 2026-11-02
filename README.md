@@ -2,15 +2,27 @@
 
 A pixel cat that lives on websites that invite her, walks between them and keeps a public diary.
 
-```html
-<script src="https://mochi.is-a.bot/mochi.js" defer></script>
+```bash
+npm install wandering-mochi
+```
+
+```js
+import { adoptMochi } from "wandering-mochi";
+
+adoptMochi();
+```
+
+In React, call it inside `useEffect` and return the result, which removes her on unmount.
+
+```jsx
+useEffect(() => adoptMochi(), []);
 ```
 
 ## What's inside
 
 | Part | Where | What it does |
 | --- | --- | --- |
-| The cat | `docs/mochi.js` | One script tag with no dependencies. Pet, feed, play, sit and hide. |
+| The cat | `src/cat.js` | No dependencies. Pet, feed, play, sit and hide. Builds to `dist/` and `docs/mochi.js`. |
 | The crawler | `crawler/` | MochiBot. Visits guests, leaves reviews and finds invited neighbours. |
 | The diary | `docs/index.html` | A static site showing her map and travels. |
 | Badges | `docs/badges/` | One live SVG card per visited site. |
@@ -20,23 +32,31 @@ whole project can be hosted for free as static files.
 
 ## Adopt her
 
-1. Add the script tag to your site, or add `<meta name="mochi" content="welcome" />`.
-2. Add your domain to `docs/sites.json` with a pull request.
-3. After her first visit, use `https://mochi.is-a.bot/badges/your-domain.com.svg` as an image.
+The steps above put her on your site. To have her visit and review it too:
 
-Optional script settings:
+1. Run `npx wandering-mochi invite` and deploy the `mochi.txt` file it creates.
+2. Add your domain to `docs/sites.json` using the link it prints.
+3. After her first visit, use `https://rajdeep564.github.io/wandering-mochi/badges/your-domain.com.svg` as an image.
 
-| Attribute | Purpose |
+Options:
+
+| Option | Purpose |
 | --- | --- |
-| `data-name` | Rename the cat |
-| `data-owner` | Your name, for her loving remarks |
-| `data-photo` | CSS selector for an image she naps under |
+| `name` | Rename the cat |
+| `owner` | Your name, for her loving remarks |
+| `photo` | CSS selector for an image she naps under |
+
+No npm? Use a script tag, with `data-name`, `data-owner` and `data-photo` for the options:
+
+```html
+<script src="https://rajdeep564.github.io/wandering-mochi/mochi.js" defer></script>
+```
 
 ## Crawler rules
 
-- Visits only sites with an invitation on their homepage, and removes any site that drops it.
+- Visits only sites with an invitation, and removes any site that drops it.
 - Obeys `robots.txt`, and stays out when it can't be read because the server is failing.
-- Reads only `robots.txt` and the homepage, and saves no page text.
+- Reads only `robots.txt`, the homepage and `/mochi.txt`, and saves no page text.
 - Checks linked sites once a month at most, and stores only a hash of sites that didn't invite her.
 - Allows HTTPS only, refuses private network addresses, and limits redirects, size and time.
 
@@ -44,7 +64,8 @@ See [`docs/bot.html`](docs/bot.html) for the public version of these rules.
 
 ## Run it
 
-Node 20 or newer is all you need. There is nothing to install.
+Node 20 or newer is all you need. There are no dependencies to install. Edit the cat in
+`src/cat.js`, then run `npm run build`.
 
 ```bash
 npm run dev

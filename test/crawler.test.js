@@ -104,6 +104,24 @@ test("a walk records a visit and finds an invited neighbour", async () => {
   assert.equal(JSON.stringify(result.diary).includes("stranger"), false);
 });
 
+test("an invite file works for sites that bundle the cat", async () => {
+  const net = fakeWeb({
+    "https://bundled.dev/": { body: "<html><title>x</title></html>" },
+    "https://bundled.dev/mochi.txt": { headers: { "content-type": "text/plain" }, body: "welcome\n" },
+  });
+  const result = await walk({ guests: ["bundled.dev"], diary: emptyDiary(), peeked: {}, now, net, log: quiet });
+  assert.equal(result.diary.sites["bundled.dev"].visits, 1);
+});
+
+test("a page returned for a missing invite file is not an invitation", async () => {
+  const net = fakeWeb({
+    "https://spa.dev/": { body: "<html><title>x</title></html>" },
+    "https://spa.dev/mochi.txt": { body: "<html><title>x</title></html>" },
+  });
+  const result = await walk({ guests: ["spa.dev"], diary: emptyDiary(), peeked: {}, now, net, log: quiet });
+  assert.deepEqual(result.guests, []);
+});
+
 test("a site that stops inviting her is forgotten", async () => {
   const diary = emptyDiary();
   recordStop(diary, { host: "gone.dev", at: "2026-10-01T00:00:00Z", paws: 3, review: "ok", souvenir: { emoji: "🐟", name: "a fish" } });

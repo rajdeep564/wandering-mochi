@@ -1,16 +1,36 @@
 {
   "name": "wandering-mochi",
   "version": "0.1.0",
-  "description": "A pixel cat that lives on opt-in websites and travels between them.",
+  "description": "A pixel cat for your website. Pet her, feed her, throw her ball.",
   "type": "module",
-  "private": true,
   "license": "MIT",
   "author": "Rajdeep Sinh Chavda",
+  "homepage": "https://rajdeep564.github.io/wandering-mochi/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajdeep564/wandering-mochi.git"
+  },
+  "keywords": ["cat", "pet", "oneko", "neko", "website-pet", "virtual-pet"],
+  "main": "./dist/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "wandering-mochi": "bin/cli.js"
+  },
+  "files": ["dist", "bin", "index.d.ts"],
+  "sideEffects": false,
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "dev": "node scripts/build.js && node scripts/dev.js",
+    "prepublishOnly": "npm run build && npm test",
     "test": "node --test",
     "walk": "node crawler/walk.js"
   }

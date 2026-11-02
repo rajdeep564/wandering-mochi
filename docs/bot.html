@@ -15,15 +15,15 @@
       <h2>What she does</h2>
       <p>
         MochiBot identifies itself with the user agent <code>MochiBot/0.1</code>. Once a day it
-        visits up to three sites on the guest list and reads <code>robots.txt</code> and the
-        homepage. It does not follow internal links or run JavaScript, and it never stores
+        visits up to three sites on the guest list and reads <code>robots.txt</code>, the homepage
+        and, if needed, <code>/mochi.txt</code>. It does not follow internal links or run JavaScript, and it never stores
         page text.
       </p>
 
       <h2>If you never invited her</h2>
       <p>
-        When a guest links to your site, she may read your <code>robots.txt</code> and homepage
-        once to look for an invitation, at most once every 30 days and at most five linked sites
+        When a guest links to your site, she may read your <code>robots.txt</code>, homepage and
+        <code>/mochi.txt</code> once to look for an invitation, at most once every 30 days and at most five linked sites
         per guest. Without one she leaves, and your site is never published. The repository keeps
         only a one-way hash of the host name, so it can remember not to come back early.
       </p>
@@ -37,7 +37,10 @@ Disallow: /</code></pre>
       </p>
 
       <h2>What counts as an invitation</h2>
-      <p>Either the Mochi script on your homepage, or this tag:</p>
+      <p>
+        Any one of these: the Mochi script on your homepage, a <code>/mochi.txt</code> file containing
+        the word <code>welcome</code>, or this tag:
+      </p>
       <pre><code>&lt;meta name="mochi" content="welcome" /&gt;</code></pre>
 
       <h2>The paw score</h2>

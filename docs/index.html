@@ -27,25 +27,33 @@
       <ol class="diary" id="diary"></ol>
       <p id="diary-empty">No entries yet. Mochi is still packing her bag.</p>
 
-      <h2>Adopt Mochi</h2>
+      <h2 id="adopt">Adopt Mochi</h2>
       <ol class="steps">
         <li>
-          Add one line before <code>&lt;/body&gt;</code>:
-          <pre><code id="snippet"></code></pre>
+          Install her:
+          <pre><code>npm install wandering-mochi</code></pre>
         </li>
         <li>
-          Add your domain to <a href="https://github.com/rajdeep564/wandering-mochi/blob/main/docs/sites.json">the guest list</a>
-          with a pull request. She can also find you by herself if a site she visits links to you.
+          Add her to your app:
+          <pre><code>import { adoptMochi } from "wandering-mochi";
+
+adoptMochi();</code></pre>
+          In React, call it inside <code>useEffect</code> and return the result. That's all she needs
+          to live on your site.
         </li>
         <li>
-          After her first visit, show off your badge:
-          <pre><code>&lt;img src="https://mochi.is-a.bot/badges/your-domain.com.svg" alt="Mochi visited this site" /&gt;</code></pre>
+          Want her to visit and review you? Run this, then follow the link it prints:
+          <pre><code>npx wandering-mochi invite</code></pre>
         </li>
       </ol>
       <p>
-        You can personalise her with <code>data-name</code>, <code>data-owner</code> and
-        <code>data-photo</code>, which takes a CSS selector for a picture she will nap under.
+        You can personalise her with <code>adoptMochi({ name, owner, photo })</code>, where
+        <code>photo</code> is a CSS selector for a picture she will nap under.
       </p>
+      <p>
+        No npm? Paste this before <code>&lt;/body&gt;</code> instead:
+      </p>
+      <pre><code id="snippet"></code></pre>
 
       <h2>Good manners</h2>
       <p>
