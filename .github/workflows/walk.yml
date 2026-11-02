@@ -1,0 +1,33 @@
+name: Mochi's daily walk
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mochi-walk
+  cancel-in-progress: false
+
+jobs:
+  walk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run walk
+      - name: Save the diary
+        run: |
+          git add docs data
+          git diff --cached --quiet && exit 0
+          git config user.name "MochiBot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Mochi's walk for $(date -u +%F)"
+          git push

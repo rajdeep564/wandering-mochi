@@ -1,0 +1,194 @@
+:root {
+  --paper: #fbf5ea;
+  --card: #fffaf2;
+  --ink: #2b2118;
+  --muted: #6b5d4d;
+  --line: #e8dcc8;
+  --accent: #0f766e;
+  --trail: #e2a35c;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #17120d;
+    --card: #231c15;
+    --ink: #f6eee2;
+    --muted: #b9aa96;
+    --line: #43372a;
+    --accent: #5eead4;
+    --trail: #c98a45;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main {
+  width: min(720px, 100% - 32px);
+  margin: 0 auto;
+  padding: 72px 0 96px;
+}
+
+h1,
+h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(40px, 9vw, 64px);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin: 64px 0 16px;
+  font-size: 28px;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+a {
+  color: var(--accent);
+}
+
+.lede {
+  max-width: 560px;
+  color: var(--muted);
+  font-size: 20px;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats strong {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.stats span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 40px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.map .trail {
+  fill: none;
+  stroke: var(--trail);
+  stroke-width: 2;
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+}
+
+.map .home {
+  fill: var(--accent);
+}
+
+.map text {
+  fill: var(--ink);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.map .empty {
+  fill: var(--muted);
+  font-size: 15px;
+}
+
+.diary {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diary li {
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.diary .where {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  font-weight: 600;
+}
+
+.diary time,
+.diary .gift {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.diary .review {
+  margin: 4px 0 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+.steps {
+  padding-left: 20px;
+}
+
+.steps li {
+  margin-bottom: 12px;
+}
+
+pre {
+  margin: 8px 0 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+:not(pre) > code {
+  padding: 1px 5px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: 0.88em;
+}
+
+footer {
+  margin-top: 72px;
+  color: var(--muted);
+  font-size: 14px;
+}

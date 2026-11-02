@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MochiBot | How the crawler behaves</title>
+    <meta name="description" content="What MochiBot fetches, what it stores and how to block it." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>About MochiBot</h1>
+      <p class="lede">If you found this link in your server logs, here is what happened.</p>
+
+      <h2>What she does</h2>
+      <p>
+        MochiBot identifies itself with the user agent <code>MochiBot/0.1</code>. Once a day it
+        visits up to three sites on the guest list and reads <code>robots.txt</code> and the
+        homepage. It does not follow internal links or run JavaScript, and it never stores
+        page text.
+      </p>
+
+      <h2>If you never invited her</h2>
+      <p>
+        When a guest links to your site, she may read your <code>robots.txt</code> and homepage
+        once to look for an invitation, at most once every 30 days and at most five linked sites
+        per guest. Without one she leaves, and your site is never published. The repository keeps
+        only a one-way hash of the host name, so it can remember not to come back early.
+      </p>
+
+      <h2>How to block her</h2>
+      <pre><code>User-agent: MochiBot
+Disallow: /</code></pre>
+      <p>
+        To stop visits from an adopted site, remove the script or the invitation tag. On her next
+        check she removes your site, its diary entries and its badge.
+      </p>
+
+      <h2>What counts as an invitation</h2>
+      <p>Either the Mochi script on your homepage, or this tag:</p>
+      <pre><code>&lt;meta name="mochi" content="welcome" /&gt;</code></pre>
+
+      <h2>The paw score</h2>
+      <p>
+        She gives one paw each for a page title, description, mobile viewport tag, language tag and
+        main heading. Her written reviews are playful, and no AI service reads your site.
+      </p>
+      <p><a href="./">Back to her diary</a></p>
+    </main>
+  </body>
+</html>

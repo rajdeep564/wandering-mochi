@@ -1,0 +1,17 @@
+{
+  "name": "wandering-mochi",
+  "version": "0.1.0",
+  "description": "A pixel cat that lives on opt-in websites and travels between them.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "Rajdeep Sinh Chavda",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "test": "node --test",
+    "walk": "node crawler/walk.js"
+  }
+}
