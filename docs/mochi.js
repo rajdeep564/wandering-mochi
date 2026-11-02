@@ -69,7 +69,7 @@
       content: ""; position: absolute; inset: 0; border: 2px solid var(--accent); border-radius: 50%;
       animation: ping 1.2s ease-out infinite;
     }
-    .sprite { width: 32px; height: 32px; image-rendering: pixelated; background-image: url(${BASE_URL}mochi-sprite.png); }
+    .sprite { width: 32px; height: 32px; image-rendering: pixelated; background-image: url(${BASE_URL}oneko.gif); }
     .panel {
       position: fixed; left: 0; top: 0; z-index: 2147483001; display: flex; flex-direction: column;
       gap: 8px; width: max-content; max-width: 240px; pointer-events: none;
