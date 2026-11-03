@@ -5,70 +5,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Wandering Mochi | A cat that travels between websites</title>
     <meta name="description" content="Mochi is an open source pixel cat that lives on opt-in websites, walks between them and keeps a public diary of everywhere she goes." />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f0e3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1814" media="(prefers-color-scheme: dark)" />
     <meta property="og:title" content="Wandering Mochi" />
     <meta property="og:description" content="A pixel cat that lives on opt-in websites and keeps a diary of her travels." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,50..100;1,9..144,400..600,50..100&family=JetBrains+Mono:wght@400;600&display=swap"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23b5391d' transform='rotate(-6 16 16)'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff8f0'%3E%E7%8C%AB%3C/text%3E%3C/svg%3E" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main>
-      <h1>Mochi is out walking the small web.</h1>
-      <p class="lede">
-        She lives on websites that invite her, wanders from one to the next, and writes down
-        everything she thinks about them.
-      </p>
-      <ul class="stats">
-        <li><strong id="stat-sites">0</strong><span>sites visited</span></li>
-        <li><strong id="stat-visits">0</strong><span>total visits</span></li>
-        <li><strong id="stat-gift">Nothing yet</strong><span>latest souvenir</span></li>
-      </ul>
-      <svg class="map" id="map" viewBox="0 0 640 320" role="img" aria-label="Map of the sites Mochi has visited"></svg>
+    <a class="skip" href="#main">Skip to content</a>
 
-      <h2>Her diary</h2>
-      <ol class="diary" id="diary"></ol>
-      <p id="diary-empty">No entries yet. Mochi is still packing her bag.</p>
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Wandering Mochi, home">
+        <span class="wordmark-seal" aria-hidden="true">猫</span>
+        <span>Wandering Mochi</span>
+      </a>
+      <nav aria-label="Sections">
+        <ul>
+          <li><a href="#travels">Diary</a></li>
+          <li><a href="#toys">Toys</a></li>
+          <li><a href="#adopt">Adopt</a></li>
+          <li><a href="https://github.com/rajdeep564/wandering-mochi">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
 
-      <h2 id="adopt">Adopt Mochi</h2>
-      <ol class="steps">
-        <li>
-          Install her:
-          <pre><code>npm install wandering-mochi</code></pre>
-        </li>
-        <li>
-          Add her to your app:
-          <pre><code>import { adoptMochi } from "wandering-mochi";
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="kicker">An open source pixel cat for your website</p>
+          <h1 id="hero-title">She reviews websites. <em>Mostly by sitting on them.</em></h1>
+          <p class="lede">
+            Mochi lives on your page, follows your cursor and naps wherever is least convenient.
+            Once a day she wanders off to other invited sites and comes home with a souvenir and a
+            very honest review.
+          </p>
+
+          <div class="install" data-copy-wrap>
+            <span class="install-prompt" aria-hidden="true">$</span>
+            <code id="install-line">npm install wandering-mochi</code>
+            <button class="copy" type="button" data-copy="install-line">Copy</button>
+          </div>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#adopt">Adopt her</a>
+            <a class="button ghost" href="#travels">Read her diary</a>
+          </div>
+
+          <p class="psst" id="psst">
+            <span class="psst-mark" aria-hidden="true">psst</span>
+            <span id="psst-text">The little white cat on your screen is her. Try clicking her.</span>
+          </p>
+        </div>
+
+        <aside class="passport" aria-label="Mochi's passport">
+          <span class="tape tape-a" aria-hidden="true"></span>
+          <div class="passport-head">
+            <span>Passport</span>
+            <span lang="ja">旅券</span>
+          </div>
+          <div class="passport-body">
+            <figure class="passport-photo" id="passport-photo">
+              <span class="sprite" role="img" aria-label="Mochi, asleep, in her passport photo"></span>
+              <figcaption>Photo taken mid-nap. She was not consulted.</figcaption>
+            </figure>
+            <dl class="passport-fields">
+              <div><dt>Name</dt><dd>Mochi</dd></div>
+              <div><dt>Species</dt><dd>Cat, 32 by 32 pixels</dd></div>
+              <div><dt>Home</dt><dd>The small web</dd></div>
+              <div><dt>Occupation</dt><dd>Critic, napper</dd></div>
+              <div class="wide"><dt>Last seen judging</dt><dd id="last-judged">Checking her notes…</dd></div>
+            </dl>
+          </div>
+          <p class="mrz" aria-hidden="true">P&lt;WEBMOCHI&lt;&lt;THE&lt;CAT&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br />NAP0000001&lt;0SMALLWEB&lt;&lt;&lt;&lt;=^.^=&lt;&lt;&lt;</p>
+        </aside>
+      </section>
+
+      <!-- Travels -->
+      <section class="travels" id="travels" aria-labelledby="travels-title">
+        <div class="section-head">
+          <p class="kicker">Travel diary</p>
+          <h2 id="travels-title">Her travels <span class="aside">(she says she was napping)</span></h2>
+          <p class="section-note">
+            Every stamp is a real visit by MochiBot to a site that invited her. Reviews are hers.
+            Complaints go to the cat.
+          </p>
+        </div>
+
+        <ul class="totals" aria-label="Travel totals">
+          <li><strong id="stat-sites">–</strong><span>sites visited</span></li>
+          <li><strong id="stat-visits">–</strong><span>total visits</span></li>
+          <li class="souvenir-total"><strong id="stat-gift">–</strong><span>latest souvenir</span></li>
+        </ul>
+
+        <div class="passport-pages">
+          <p class="diary-status" id="diary-status" role="status">Unpacking her suitcase…</p>
+          <ol class="stamps" id="diary" aria-label="Diary entries, newest first"></ol>
+        </div>
+        <p class="diary-updated" id="diary-updated" hidden></p>
+      </section>
+
+      <!-- Toys -->
+      <section class="toys" id="toys" aria-labelledby="toys-title">
+        <div class="section-head">
+          <p class="kicker">Enrichment</p>
+          <h2 id="toys-title">Things to do while she isn't looking</h2>
+        </div>
+
+        <div class="toy-grid">
+          <article class="toy shelf-toy" aria-labelledby="shelf-title">
+            <span class="tape tape-b" aria-hidden="true"></span>
+            <h3 id="shelf-title">The shelf</h3>
+            <p class="toy-note">Everything on it is fragile and in her way. Click an item to let her handle it.</p>
+            <div class="shelf-stage">
+              <ul class="shelf-items" id="shelf" aria-label="Items on the shelf"></ul>
+              <div class="shelf-board" aria-hidden="true"></div>
+              <div class="floor" aria-hidden="true"></div>
+            </div>
+            <div class="shelf-footer">
+              <p class="shelf-log" id="shelf-log" aria-live="polite">Seven objects. Zero supervision.</p>
+              <button class="button small" type="button" id="shelf-reset" disabled>Put it all back</button>
+            </div>
+          </article>
+
+          <article class="toy translator" aria-labelledby="translator-title">
+            <h3 id="translator-title">Cat translator</h3>
+            <p class="toy-note">Type something. She will say it properly. Paste her meows back in to decode them.</p>
+            <form class="translator-form" id="translator" autocomplete="off">
+              <label for="translator-in" id="translator-in-label">Human</label>
+              <textarea id="translator-in" rows="3" maxlength="140" spellcheck="false">Feed me. Now.</textarea>
+              <div class="translator-swap">
+                <button class="button small" type="button" id="translator-swap" aria-describedby="translator-direction">Swap ⇅</button>
+                <span id="translator-direction" class="translator-direction">Human → Cat</span>
+              </div>
+              <label for="translator-out" id="translator-out-label">Cat</label>
+              <output id="translator-out" class="translator-out" for="translator-in" aria-live="polite"></output>
+              <div class="translator-foot">
+                <span class="translator-accuracy">Accuracy: 100%, according to her.</span>
+                <button class="copy" type="button" data-copy="translator-out">Copy</button>
+              </div>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- Adopt -->
+      <section class="adopt" id="adopt" aria-labelledby="adopt-title">
+        <div class="section-head">
+          <p class="kicker">Adoption papers</p>
+          <h2 id="adopt-title">Adopt Mochi</h2>
+          <p class="section-note">Installs in one line. Ignores you in zero.</p>
+        </div>
+
+        <div class="certificate">
+          <span class="tape tape-a" aria-hidden="true"></span>
+          <div class="cert-head">
+            <span>Certificate of adoption</span>
+            <span class="cert-no" aria-hidden="true">No. 0001 · one cat, pixel</span>
+          </div>
+          <span class="cert-seal" aria-hidden="true">Adopted<small>approved by the cat</small></span>
+
+          <ol class="steps">
+            <li>
+              <h3>Install her</h3>
+              <div class="code">
+                <pre><code id="code-install">npm install wandering-mochi</code></pre>
+                <button class="copy" type="button" data-copy="code-install">Copy</button>
+              </div>
+            </li>
+            <li>
+              <h3>Add her to your app</h3>
+              <div class="code">
+                <pre><code id="code-adopt">import { adoptMochi } from "wandering-mochi";
 
 adoptMochi();</code></pre>
-          In React, call it inside <code>useEffect</code> and return the result. That's all she needs
-          to live on your site.
-        </li>
-        <li>
-          Want her to visit and review you? Run this, then follow the link it prints:
-          <pre><code>npx wandering-mochi invite</code></pre>
-        </li>
-      </ol>
-      <p>
-        You can personalise her with <code>adoptMochi({ name, owner, photo })</code>, where
-        <code>photo</code> is a CSS selector for a picture she will nap under.
-      </p>
-      <p>
-        No npm? Paste this before <code>&lt;/body&gt;</code> instead:
-      </p>
-      <pre><code id="snippet"></code></pre>
+                <button class="copy" type="button" data-copy="code-adopt">Copy</button>
+              </div>
+              <p>In React, call it inside <code>useEffect</code> and return the result so she moves out cleanly.</p>
+            </li>
+            <li>
+              <h3>Invite her to visit <span class="optional">optional</span></h3>
+              <div class="code">
+                <pre><code id="code-invite">npx wandering-mochi invite</code></pre>
+                <button class="copy" type="button" data-copy="code-invite">Copy</button>
+              </div>
+              <p>Run it, then follow the link it prints. She will visit, review your site and add a stamp to her passport.</p>
+            </li>
+          </ol>
 
-      <h2>Good manners</h2>
-      <p>
-        She stays only where she is invited, obeys <code>robots.txt</code> and walks a few steps a
-        day. The cat script uses no cookies and no tracking. Remove the line and she moves out.
-        <a href="bot.html">Read how MochiBot works</a>.
-      </p>
+          <div class="cert-sign" aria-hidden="true">
+            <div><span class="sign-line"></span><span>Your signature</span></div>
+            <div>
+              <svg class="sign-paw" viewBox="0 0 24 24"><ellipse cx="12" cy="16" rx="5.2" ry="4.4" /><ellipse cx="5.2" cy="10.4" rx="2.2" ry="2.8" /><ellipse cx="9.4" cy="6.2" rx="2.2" ry="2.9" /><ellipse cx="14.6" cy="6.2" rx="2.2" ry="2.9" /><ellipse cx="18.8" cy="10.4" rx="2.2" ry="2.8" /></svg>
+              <span>Mochi's paw</span>
+            </div>
+          </div>
+        </div>
 
-      <footer>
-        Open source under the MIT License, on
-        <a href="https://github.com/rajdeep564/wandering-mochi">GitHub</a>. Built on
-        <a href="https://github.com/adryd325/oneko.js">oneko.js</a>.
-      </footer>
+        <div class="adopt-extras">
+          <div class="extra">
+            <h3>Make her yours</h3>
+            <div class="code">
+              <pre><code id="code-options">adoptMochi({ name, owner, photo });</code></pre>
+              <button class="copy" type="button" data-copy="code-options">Copy</button>
+            </div>
+            <p><code>name</code> renames her, <code>owner</code> is you, and <code>photo</code> is a CSS selector for a picture she will nap under. On this page, that is her passport photo.</p>
+          </div>
+          <div class="extra">
+            <h3>No npm?</h3>
+            <p>Paste this before <code>&lt;/body&gt;</code> instead:</p>
+            <div class="code">
+              <pre><code id="snippet">&lt;script src="mochi.js" defer&gt;&lt;/script&gt;</code></pre>
+              <button class="copy" type="button" data-copy="snippet">Copy</button>
+            </div>
+          </div>
+          <div class="extra extra-badge">
+            <div>
+              <h3>Show off her visit</h3>
+              <p>Once she has stamped your site, add the badge. Swap in your domain.</p>
+              <div class="code">
+                <pre><code id="code-badge">&lt;img src="https://rajdeep564.github.io/wandering-mochi/badges/your-domain.com.svg" alt="Mochi visited this site"&gt;</code></pre>
+                <button class="copy" type="button" data-copy="code-badge">Copy</button>
+              </div>
+            </div>
+            <figure class="badge-preview" id="badge-preview" hidden>
+              <img id="badge-img" alt="" width="360" height="84" />
+              <figcaption id="badge-caption"></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Manners -->
+      <section class="manners" aria-labelledby="manners-title">
+        <div class="rules">
+          <span class="tape tape-b" aria-hidden="true"></span>
+          <div class="rules-head">
+            <p class="kicker">House rules</p>
+            <h2 id="manners-title">Good manners</h2>
+            <p class="manners-lede">She is a cat, not a raccoon.</p>
+            <a class="arrow-link" href="bot.html">How MochiBot works, and how to block her</a>
+          </div>
+          <ul class="manners-list">
+            <li><strong>Invitation only.</strong> She visits sites that asked for her, and nobody else.</li>
+            <li><strong>Obeys <code>robots.txt</code>.</strong> One rule and she stays home.</li>
+            <li><strong>No cookies, no tracking.</strong> The cat script remembers how much you love her, on your device, and that's it.</li>
+          </ul>
+        </div>
+      </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-sign">Made by <a href="https://rajdeep.is-a.dev">Rajdeep</a>, supervised by Mochi.</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/rajdeep564/wandering-mochi">GitHub</a></li>
+          <li><a href="https://www.npmjs.com/package/wandering-mochi">npm</a></li>
+          <li><a href="bot.html">MochiBot</a></li>
+        </ul>
+        <p class="footer-fine">
+          Open source under the MIT License. Walking, sprites and attitude adapted from
+          <a href="https://github.com/adryd325/oneko.js">oneko.js</a>.
+        </p>
+      </div>
+    </footer>
+
+    <p class="sr-only" id="copy-status" aria-live="polite"></p>
+
     <script src="site.js"></script>
-    <script src="mochi.js" data-photo="#map"></script>
+    <script src="mochi.js" data-photo="#passport-photo"></script>
   </body>
 </html>

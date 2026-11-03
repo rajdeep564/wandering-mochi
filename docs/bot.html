@@ -5,50 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MochiBot | How the crawler behaves</title>
     <meta name="description" content="What MochiBot fetches, what it stores and how to block it." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,50..100;1,9..144,400..600,50..100&family=JetBrains+Mono:wght@400;600&display=swap"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23b5391d' transform='rotate(-6 16 16)'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff8f0'%3E%E7%8C%AB%3C/text%3E%3C/svg%3E" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Wandering Mochi, home">
+        <span class="wordmark-seal" aria-hidden="true">猫</span>
+        <span>Wandering Mochi</span>
+      </a>
+      <nav aria-label="Sections">
+        <ul>
+          <li><a href="./#travels">Diary</a></li>
+          <li><a href="./#adopt">Adopt</a></li>
+          <li><a href="https://github.com/rajdeep564/wandering-mochi">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main" class="doc">
+      <p class="kicker">Field notes</p>
       <h1>About MochiBot</h1>
-      <p class="lede">If you found this link in your server logs, here is what happened.</p>
+      <p class="lede">If you found this link in your server logs, here is what happened. Short version: a very polite cat.</p>
 
-      <h2>What she does</h2>
-      <p>
-        MochiBot identifies itself with the user agent <code>MochiBot/0.1</code>. Once a day it
-        visits up to three sites on the guest list and reads <code>robots.txt</code>, the homepage
-        and, if needed, <code>/mochi.txt</code>. It does not follow internal links or run JavaScript, and it never stores
-        page text.
-      </p>
+      <section class="doc-section" aria-labelledby="what">
+        <h2 id="what">What she does</h2>
+        <p>
+          MochiBot identifies itself with the user agent <code>MochiBot/0.1</code>. Once a day it
+          visits up to three sites on the guest list and reads <code>robots.txt</code>, the homepage
+          and, if needed, <code>/mochi.txt</code>. It does not follow internal links or run
+          JavaScript, and it never stores page text.
+        </p>
+      </section>
 
-      <h2>If you never invited her</h2>
-      <p>
-        When a guest links to your site, she may read your <code>robots.txt</code>, homepage and
-        <code>/mochi.txt</code> once to look for an invitation, at most once every 30 days and at most five linked sites
-        per guest. Without one she leaves, and your site is never published. The repository keeps
-        only a one-way hash of the host name, so it can remember not to come back early.
-      </p>
+      <section class="doc-section" aria-labelledby="uninvited">
+        <h2 id="uninvited">If you never invited her</h2>
+        <p>
+          When a guest links to your site, she may read your <code>robots.txt</code>, homepage and
+          <code>/mochi.txt</code> once to look for an invitation, at most once every 30 days and at
+          most five linked sites per guest. Without one she leaves, and your site is never
+          published. The repository keeps only a one-way hash of the host name, so it can remember
+          not to come back early.
+        </p>
+      </section>
 
-      <h2>How to block her</h2>
-      <pre><code>User-agent: MochiBot
+      <section class="doc-section doc-card" aria-labelledby="block">
+        <span class="tape tape-a" aria-hidden="true"></span>
+        <h2 id="block">How to block her</h2>
+        <p>Add this to your <code>robots.txt</code>:</p>
+        <div class="code">
+          <pre><code id="code-robots">User-agent: MochiBot
 Disallow: /</code></pre>
-      <p>
-        To stop visits from an adopted site, remove the script or the invitation tag. On her next
-        check she removes your site, its diary entries and its badge.
-      </p>
+          <button class="copy" type="button" data-copy="code-robots">Copy</button>
+        </div>
+        <p>
+          To stop visits from an adopted site, remove the script or the invitation tag. On her next
+          check she removes your site, its diary entries and its badge.
+        </p>
+      </section>
 
-      <h2>What counts as an invitation</h2>
-      <p>
-        Any one of these: the Mochi script on your homepage, a <code>/mochi.txt</code> file containing
-        the word <code>welcome</code>, or this tag:
-      </p>
-      <pre><code>&lt;meta name="mochi" content="welcome" /&gt;</code></pre>
+      <section class="doc-section" aria-labelledby="invite">
+        <h2 id="invite">What counts as an invitation</h2>
+        <p>Any one of these:</p>
+        <ul>
+          <li>the Mochi script on your homepage,</li>
+          <li>a <code>/mochi.txt</code> file containing the word <code>welcome</code>,</li>
+          <li>or this tag:</li>
+        </ul>
+        <div class="code">
+          <pre><code id="code-meta">&lt;meta name="mochi" content="welcome" /&gt;</code></pre>
+          <button class="copy" type="button" data-copy="code-meta">Copy</button>
+        </div>
+      </section>
 
-      <h2>The paw score</h2>
-      <p>
-        She gives one paw each for a page title, description, mobile viewport tag, language tag and
-        main heading. Her written reviews are playful, and no AI service reads your site.
-      </p>
-      <p><a href="./">Back to her diary</a></p>
+      <section class="doc-section" aria-labelledby="paws">
+        <h2 id="paws">The paw score</h2>
+        <p>
+          She gives one paw each for a page title, description, mobile viewport tag, language tag
+          and main heading. Her written reviews are playful, and no AI service reads your site.
+        </p>
+      </section>
+
+      <a class="arrow-link back" href="./">Back to her diary</a>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-sign">Made by <a href="https://rajdeep.is-a.dev">Rajdeep</a>, supervised by Mochi.</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/rajdeep564/wandering-mochi">GitHub</a></li>
+          <li><a href="https://www.npmjs.com/package/wandering-mochi">npm</a></li>
+        </ul>
+        <p class="footer-fine">
+          Open source under the MIT License. Walking, sprites and attitude adapted from
+          <a href="https://github.com/adryd325/oneko.js">oneko.js</a>.
+        </p>
+      </div>
+    </footer>
+
+    <p class="sr-only" id="copy-status" aria-live="polite"></p>
+    <script>
+      // Copy buttons for the two snippets on this page.
+      document.addEventListener("click", async (event) => {
+        const button = event.target.closest("button[data-copy]");
+        if (!button) return;
+        const text = document.getElementById(button.dataset.copy).textContent;
+        let ok = true;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          ok = false;
+        }
+        button.textContent = ok ? "Copied ✓" : "Press Ctrl+C";
+        button.classList.toggle("copied", ok);
+        document.getElementById("copy-status").textContent = ok ? "Copied to clipboard." : "Could not copy.";
+        setTimeout(() => {
+          button.textContent = "Copy";
+          button.classList.remove("copied");
+        }, 2000);
+      });
+    </script>
   </body>
 </html>
