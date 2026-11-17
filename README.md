@@ -36,7 +36,7 @@ The steps above put her on your site. To have her visit and review it too:
 
 1. Run `npx wandering-mochi invite` and deploy the `mochi.txt` file it creates.
 2. Add your domain to `docs/sites.json` using the link it prints.
-3. After her first visit, use `https://rajdeep564.github.io/wandering-mochi/badges/your-domain.com.svg` as an image.
+3. After her first visit, use `https://mochi.is-a.bot/badges/your-domain.com.svg` as an image.
 
 Options:
 
@@ -49,7 +49,7 @@ Options:
 No npm? Use a script tag, with `data-name`, `data-owner` and `data-photo` for the options:
 
 ```html
-<script src="https://rajdeep564.github.io/wandering-mochi/mochi.js" defer></script>
+<script src="https://mochi.is-a.bot/mochi.js" defer></script>
 ```
 
 ## Crawler rules

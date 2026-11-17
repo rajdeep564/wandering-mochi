@@ -2,7 +2,7 @@
 // Movement and sprites adapted from oneko.js (https://github.com/adryd325/oneko.js),
 // MIT License, Copyright (c) 2022 adryd.
 const SPRITE_URL = "__SPRITE_URL__";
-const HOME_URL = "https://rajdeep564.github.io/wandering-mochi/";
+const HOME_URL = "https://mochi.is-a.bot/";
 
 export function adoptMochi({ name = "Mochi", owner = "", photo = "", home = HOME_URL } = {}) {
   if (typeof window === "undefined" || window.__wanderingMochi) return () => {};
