@@ -1,20 +1,30 @@
 {
-  "updatedAt": "2026-11-23T18:14:29.984Z",
+  "updatedAt": "2026-11-24T17:49:49.939Z",
   "sites": {
     "rajdeep.is-a.dev": {
-      "visits": 22,
+      "visits": 23,
       "firstVisit": "2026-11-02T12:21:40.016Z",
-      "lastVisit": "2026-11-23T18:14:29.984Z",
+      "lastVisit": "2026-11-24T17:49:49.939Z",
       "foundVia": null,
       "paws": 5,
-      "review": "So fast I had no time to stretch.",
+      "review": "Warm, sunny, and nobody moved me off the keyboard.",
       "souvenir": {
-        "emoji": "🪶",
-        "name": "a feather"
+        "emoji": "🔘",
+        "name": "a shiny button"
       }
     }
   },
   "stops": [
+    {
+      "host": "rajdeep.is-a.dev",
+      "at": "2026-11-24T17:49:49.939Z",
+      "paws": 5,
+      "review": "Warm, sunny, and nobody moved me off the keyboard.",
+      "souvenir": {
+        "emoji": "🔘",
+        "name": "a shiny button"
+      }
+    },
     {
       "host": "rajdeep.is-a.dev",
       "at": "2026-11-23T18:14:29.984Z",
